@@ -1,5 +1,6 @@
 package com.kwai.koom.demo.javaleak;
 
+import com.kwai.koom.demo.R;
 import java.io.File;
 
 import android.annotation.SuppressLint;
@@ -10,8 +11,6 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.kwai.koom.demo.MainActivity;
-import com.kwai.koom.demo.R;
 import com.kwai.koom.demo.javaleak.test.LeakMaker;
 import com.kwai.koom.javaoom.hprof.ForkStripHeapDumper;
 import com.kwai.koom.javaoom.monitor.OOMMonitor;
@@ -30,30 +29,27 @@ public class JavaLeakTestActivity extends AppCompatActivity {
 
   @SuppressLint("NonConstantResourceId")
   public void onClick(View v) {
-    switch (v.getId()) {
-      case R.id.btn_make_java_leak:
-        showJavaLeakHint();
+    final int id = v.getId();
+    if (id == R.id.btn_make_java_leak) {
+      showJavaLeakHint();
 
-        /*
-         * Init OOMMonitor
-         */
-        OOMMonitorInitTask.INSTANCE.init(JavaLeakTestActivity.this.getApplication());
-        OOMMonitor.INSTANCE.startLoop(true, false,5_000L);
+      /*
+       * Init OOMMonitor
+       */
+      OOMMonitorInitTask.INSTANCE.init(JavaLeakTestActivity.this.getApplication());
+      OOMMonitor.INSTANCE.startLoop(true, false,5_000L);
 
-        /*
-         * Make some leaks for test!
-         */
-        LeakMaker.makeLeak(this);
-        break;
+      /*
+       * Make some leaks for test!
+       */
+      LeakMaker.makeLeak(this);
+    } else if (id == R.id.btn_hprof_dump) {
+      showHprofDumpHint();
 
-      case R.id.btn_hprof_dump:
-        showHprofDumpHint();
-
-        //Pull the hprof from the devices.
-        //adb shell "run-as com.kwai.koom.demo cat 'files/test.hprof'" > ~/temp/test.hprof
-        ForkStripHeapDumper.getInstance().dump(
-            this.getFilesDir().getAbsolutePath() + File.separator + "test.hprof");
-        break;
+      //Pull the hprof from the devices.
+      //adb shell "run-as com.kwai.koom.demo cat 'files/test.hprof'" > ~/temp/test.hprof
+      ForkStripHeapDumper.getInstance().dump(
+          this.getFilesDir().getAbsolutePath() + File.separator + "test.hprof");
     }
   }
 

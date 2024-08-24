@@ -55,9 +55,9 @@ class ScopedLocalRef {
 
   T get() const { return local_ref_; }
 
-  bool operator==(std::nullptr_t) const { return local_ref_ == nullptr; }
+  bool operator==(nullptr_t) const { return local_ref_ == nullptr; }
 
-  bool operator!=(std::nullptr_t) const { return local_ref_ != nullptr; }
+  bool operator!=(nullptr_t) const { return local_ref_ != nullptr; }
 
  private:
   ScopedLocalRef(const ScopedLocalRef &) = delete;
