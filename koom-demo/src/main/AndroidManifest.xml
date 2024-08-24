@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="com.kwai.koom.demo">
 
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
   <application
     android:name=".KOOMApplication"
     android:allowBackup="true"
@@ -11,7 +14,8 @@
     android:supportsRtl="true"
     android:theme="@style/Theme.App">
 
-    <activity android:name=".MainActivity">
+    <activity android:name=".MainActivity"
+      android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 
@@ -28,8 +32,4 @@
 
     <activity android:name=".javaleak.JavaLeakTestActivity"/>
   </application>
-  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
 </manifest>
